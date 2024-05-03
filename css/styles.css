@@ -1,0 +1,189 @@
+/* adjustable settings */
+::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+body {
+  /* scrollbar shift hotfix */
+  width: 100vw;
+  overflow-x: hidden;
+  background-color: #f3f5f7;
+}
+
+/* colors */
+header,
+button,
+a.button {
+  background-color: #87bcde;
+  color: white;
+}
+
+.fa-pen {
+  color: #87bcde;
+  font-size: 1.5rem;
+}
+
+#delete-entry {
+  color: #e21212;
+  font-size: calc(7rem / 8);
+  text-decoration: underline;
+}
+
+#cancel {
+  margin-left: 0;
+  margin-right: auto;
+  background-color: #b6b6b6;
+}
+
+#confirm {
+  background-color: #dc2626;
+}
+
+/* text */
+
+/* headings */
+h1,
+h2,
+h3 {
+  font-family: 'Proza Libre', sans-serif;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-family: Lexend, sans-serif;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  color: #292929;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* content */
+label {
+  font-family: 'Proza Libre', sans-serif;
+  font-weight: 600;
+  display: block;
+  padding-bottom: 0.5rem;
+}
+
+input,
+textarea,
+p {
+  width: 100%;
+  font-size: 1rem;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  line-height: 25.6px;
+}
+
+input {
+  height: 2.5rem;
+}
+
+textarea {
+  height: calc(149rem / 16);
+}
+
+/* interactive */
+
+/* container */
+.navbar,
+.hbar {
+  display: flex;
+  align-items: center;
+}
+
+/* interactive items */
+a.button,
+button,
+.fa-pen {
+  margin-right: 0;
+  margin-left: auto;
+  text-transform: uppercase;
+}
+
+a,
+button {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+a.button,
+button {
+  display: flex;
+  font-size: 1rem;
+  border: 0;
+  border-radius: 0.25rem;
+  height: 2rem;
+  min-width: 4.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+dialog {
+  border: 0;
+  border-radius: 0.25rem;
+}
+
+dialog p {
+  font-size: calc(7rem / 8);
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+/* items */
+.form-item,
+.entry-item,
+.entry {
+  margin-bottom: 2rem;
+}
+
+.form-item img,
+.entry-item img {
+  border-radius: 0.25rem;
+  object-fit: cover;
+}
+
+/* functions */
+li.empty:not(:only-child) {
+  display: none;
+}
+
+/* one-offs */
+.navbar a {
+  margin: 0 1rem;
+}
+
+li.empty p {
+  text-align: center;
+}
+
+ul,
+div.plates {
+  width: 100%;
+}
+
+/* desktop responsive */
+@media screen and (width >=768px) {
+  .container {
+    padding: 0 5.1875rem;
+  }
+}
+
+.plate {
+  background-image: url('../images/Plate.svg');
+  background-size: cover;
+  width: 100%;
+  aspect-ratio: 2/1;
+  filter: drop-shadow(0 0.5rem 0.5rem rgba(41, 41, 41, 0.2));
+}
