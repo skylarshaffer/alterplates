@@ -21,20 +21,24 @@ for (const key in domQueries) {
 document.addEventListener('keydown', (event) => {
   const eventTarget = event.target;
   if (eventTarget !== $input) {
-    if (testKey(event.key) && $input.value.length < 7) {
-      $input.value += event.key;
-    } else if (event.key === 'Backspace' && $input.value.length > 0) {
+    if (event.key === 'Backspace' && $input.value.length > 0) {
       $input.value = $input.value.substring(0, $input.value.length - 1);
+    } else if (testKeyStrict(event.key) && $input.value.length < 7) {
+      event.preventDefault();
+      $input.value += event.key;
     }
   }
 });
 $input.addEventListener('keydown', (event) => {
-  if (!testKey(event.key) && event.key !== 'Backspace') {
+  if (!testKey(event.key)) {
     event.preventDefault();
   }
   $input.selectionStart = $input.selectionEnd = $input.value.length;
 });
 function testKey(key) {
+  return /[A-Za-z0-9 ]/.test(key);
+}
+function testKeyStrict(key) {
   return /^[A-Za-z0-9 ]$/.test(key);
 }
 console.log(data);
