@@ -9,10 +9,11 @@
   --palette-california-red: #e21212;
   --font-dm-sans: 'DM Sans', sans-serif;
   --font-lexend: lexend, sans-serif;
-  --font-sofia-sans: 'Sofia Sans', sans-serif;
+  --font-sofia-sans: 'Sofia Sans Extra Condensed', sans-serif;
   --main-bg-color: var(--palette-background-grey);
   --text-color: var(--palette-favorites-black);
   --logo-color: var(--palette-pure-white);
+  --plate-text-color: var(--palette-license-plate-blue);
 }
 
 ::backdrop {
@@ -84,21 +85,6 @@ label {
   font-weight: 600;
   display: block;
   padding-bottom: 0.5rem;
-}
-
-input {
-  position: relative;
-  top: 12%;
-  width: 100%;
-  height: 50%;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  font-family: var(--font-sofia-sans);
-  text-transform: uppercase;
-  font-size: 1000%;
-  font-weight: 400;
-  text-align: center;
 }
 
 textarea {
@@ -201,4 +187,45 @@ div.plates {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: justify;
+}
+
+input {
+  position: relative;
+  top: 12%;
+  width: 100%;
+  height: 50%;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-sofia-sans);
+  text-transform: uppercase;
+  font-size: min(24vw, 12rem);
+  font-weight: 400;
+  text-align: center;
+  font-stretch: condensed;
+  color: var(--plate-text-color);
+}
+
+.suggestions input {
+  font-size: min(12vw, 6rem);
+
+  @media screen and (width >=768px) {
+    font-size: min(8vw, 4rem);
+  }
+}
+
+@media screen and (width >=768px) {
+  .container {
+    max-width: 900px;
+  }
+
+  .column-full,
+  .column-half {
+    padding: 0 0.75rem;
+  }
+
+  .column-half {
+    width: 50%;
+  }
 }
