@@ -190,9 +190,9 @@ div.plates {
   text-align: justify;
 }
 
-input {
+.plate * {
   position: relative;
-  top: 12%;
+  top: 10%;
   width: 100%;
   height: 50%;
   background-color: transparent;
@@ -207,10 +207,18 @@ input {
   color: var(--plate-text-color);
 }
 
-.suggestions input {
+.suggestions .plate * {
   font-size: min(12vw, 6rem);
 
   @media screen and (width >=768px) {
     font-size: min(8vw, 4rem);
   }
+}
+
+.suggestions .plate input {
+  display: none;
+}
+
+:not(.suggestions) .plate p {
+  display: none;
 }
