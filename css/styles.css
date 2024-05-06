@@ -1,0 +1,101 @@
+/* variables */
+
+:root {
+  --palette-pure-white: #fff;
+  --palette-favorites-black: #292929;
+  --palette-background-grey: #f3f5f7;
+  --palette-alterplates-blue: #87bcde;
+  --palette-license-plate-blue: #123b7d;
+  --palette-california-red: #e21212;
+  --font-dm-sans: 'DM Sans', sans-serif;
+  --font-lexend: lexend, sans-serif;
+  --font-sofia-sans: 'Sofia Sans Extra Condensed', sans-serif;
+  --main-bg-color: var(--palette-background-grey);
+  --text-color: var(--palette-favorites-black);
+  --logo-color: var(--palette-pure-white);
+  --plate-text-color: var(--palette-license-plate-blue);
+  --header-color: var(--palette-alterplates-blue);
+}
+
+body {
+  /* scrollbar shift hotfix */
+  width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--main-bg-color);
+  caret-color: transparent;
+}
+
+/* colors */
+header {
+  background-color: var(--header-color);
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-family: var(--font-lexend);
+  color: var(--logo-color);
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  font-family: var(--font-dm-sans);
+  color: var(--text-color);
+}
+
+/* one-offs */
+
+div.plates {
+  width: 100%;
+}
+
+/* desktop responsive */
+@media screen and (width >=768px) {
+  .container {
+    padding: 0 5.1875rem;
+  }
+}
+
+.plate {
+  background-image: url('../images/Plate.svg');
+  background-size: cover;
+  width: 100%;
+  aspect-ratio: 2/1;
+  filter: drop-shadow(0 0.5rem 0.5rem rgba(41, 41, 41, 0.2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: justify;
+}
+
+.plate * {
+  position: relative;
+  top: 10%;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-sofia-sans);
+  text-transform: uppercase;
+  font-size: min(24vw, 12rem);
+  font-weight: 400;
+  text-align: center;
+  color: var(--plate-text-color);
+}
+
+.suggestions .plate * {
+  font-size: min(12vw, 6rem);
+
+  @media screen and (width >=768px) {
+    font-size: min(8vw, 4rem);
+  }
+}
+
+.suggestions .plate input {
+  display: none;
+}
+
+.plate span:not(.suggestions span) {
+  display: none;
+}

@@ -1,25 +1,23 @@
+'use strict';
 //  DOM
 //    D.1   variable definition
 //      D.1.plate
-const $plate = document.querySelector('#plate') as HTMLAnchorElement;
-const $input = document.querySelector('input') as HTMLInputElement;
-
+const $plate = document.querySelector('#plate');
+const $input = document.querySelector('input');
 //    D.2   domQueries object
-const domQueries: Record<string, any> = {
+const domQueries = {
   $plate,
   $input,
 };
-
 //    D.3   error checking
 for (const key in domQueries) {
   if (!domQueries[key]) throw new Error(`The ${key} dom query failed`);
 }
-
 //  LISTENERS
 //    L.1   keydown
 //      L.1.document keydown
 //  document handleKeydown
-document.addEventListener('keydown', (event: KeyboardEvent) => {
+document.addEventListener('keydown', (event) => {
   const eventTarget = event.target;
   if (eventTarget !== $input) {
     if (event.key === 'Backspace' && $input.value.length > 0) {
@@ -32,17 +30,15 @@ document.addEventListener('keydown', (event: KeyboardEvent) => {
 });
 //      L.1.input keydown
 //  $input handleKeydown
-$input.addEventListener('keydown', (event: KeyboardEvent) => {
+$input.addEventListener('keydown', (event) => {
   if (!testKey(event.key)) {
     event.preventDefault();
   }
   $input.selectionStart = $input.selectionEnd = $input.value.length;
 });
-
-function testKey(key: string): boolean {
+function testKey(key) {
   return /[A-Za-z0-9 ]/.test(key);
 }
-
-function testKeyStrict(key: string): boolean {
+function testKeyStrict(key) {
   return /^[A-Za-z0-9 ]$/.test(key);
 }
