@@ -219,6 +219,6 @@ div.plates {
   display: none;
 }
 
-:not(.suggestions) .plate p {
+.plate p:not(.suggestions p) {
   display: none;
 }
