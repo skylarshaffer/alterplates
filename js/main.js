@@ -1,5 +1,4 @@
 'use strict';
-/* global data */
 //  DOM
 //    D.1   variable definition
 //      D.1.plate
@@ -15,9 +14,9 @@ for (const key in domQueries) {
   if (!domQueries[key]) throw new Error(`The ${key} dom query failed`);
 }
 //  LISTENERS
-//    L.1   clicks
-//      L.1.list clicks
-//  $ul handleClick
+//    L.1   keydown
+//      L.1.document keydown
+//  document handleKeydown
 document.addEventListener('keydown', (event) => {
   const eventTarget = event.target;
   if (eventTarget !== $input) {
@@ -29,6 +28,8 @@ document.addEventListener('keydown', (event) => {
     }
   }
 });
+//      L.1.input keydown
+//  $input handleKeydown
 $input.addEventListener('keydown', (event) => {
   if (!testKey(event.key)) {
     event.preventDefault();
@@ -41,4 +42,3 @@ function testKey(key) {
 function testKeyStrict(key) {
   return /^[A-Za-z0-9 ]$/.test(key);
 }
-console.log(data);

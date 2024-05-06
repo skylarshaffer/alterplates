@@ -1,5 +1,3 @@
-/* global data */
-
 //  DOM
 //    D.1   variable definition
 //      D.1.plate
@@ -18,9 +16,9 @@ for (const key in domQueries) {
 }
 
 //  LISTENERS
-//    L.1   clicks
-//      L.1.list clicks
-//  $ul handleClick
+//    L.1   keydown
+//      L.1.document keydown
+//  document handleKeydown
 document.addEventListener('keydown', (event: KeyboardEvent) => {
   const eventTarget = event.target;
   if (eventTarget !== $input) {
@@ -32,7 +30,8 @@ document.addEventListener('keydown', (event: KeyboardEvent) => {
     }
   }
 });
-
+//      L.1.input keydown
+//  $input handleKeydown
 $input.addEventListener('keydown', (event: KeyboardEvent) => {
   if (!testKey(event.key)) {
     event.preventDefault();
@@ -47,5 +46,3 @@ function testKey(key: string): boolean {
 function testKeyStrict(key: string): boolean {
   return /^[A-Za-z0-9 ]$/.test(key);
 }
-
-console.log(data);
