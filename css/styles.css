@@ -214,18 +214,3 @@ input {
     font-size: min(8vw, 4rem);
   }
 }
-
-@media screen and (width >=768px) {
-  .container {
-    max-width: 900px;
-  }
-
-  .column-full,
-  .column-half {
-    padding: 0 0.75rem;
-  }
-
-  .column-half {
-    width: 50%;
-  }
-}
