@@ -72,7 +72,7 @@ div.plates {
   outline: none;
   font-family: var(--font-sofia-sans);
   text-transform: uppercase;
-  font-size: min(24vw, 12rem);
+  font-size: min(24vw, 9rem);
   font-weight: 400;
   text-align: center;
   color: var(--plate-text-color);
@@ -90,6 +90,10 @@ div.plates {
 /* desktop */
 
 @media screen and (width >=768px) {
+  .plate * {
+    font-size: min(22vw, 12rem);
+  }
+
   .container {
     padding: 0 5.1875rem;
   }
