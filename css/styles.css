@@ -67,6 +67,7 @@ div.plates {
   align-items: center;
   justify-content: center;
   text-align: justify;
+  margin: 1rem 0;
 }
 
 .plate * {
@@ -84,11 +85,21 @@ div.plates {
   color: var(--plate-text-color);
 }
 
-.suggestions .plate * {
-  font-size: min(12vw, 6rem);
+.suggestions .plate {
+  width: calc(50% - 1rem);
+  margin: 1rem 0;
+
+  * {
+    font-size: min(12vw, 6rem);
+  }
 
   @media screen and (width >=768px) {
-    font-size: min(8vw, 4rem);
+    width: calc(100% / 3 - 1rem);
+    margin: 0.75rem 0;
+
+    * {
+      font-size: min(8vw, 4rem);
+    }
   }
 }
 
@@ -98,4 +109,10 @@ div.plates {
 
 .plate span:not(.suggestions span) {
   display: none;
+}
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
