@@ -127,3 +127,7 @@ div.plates {
   flex-wrap: wrap;
   justify-content: space-between;
 }
+
+.column-full:has(input:placeholder-shown) + .suggestions {
+  display: none;
+}
