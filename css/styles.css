@@ -50,13 +50,6 @@ div.plates {
   width: 100%;
 }
 
-/* desktop responsive */
-@media screen and (width >=768px) {
-  .container {
-    padding: 0 5.1875rem;
-  }
-}
-
 .plate {
   background-image: url('../images/Plate.svg');
   background-size: cover;
@@ -90,15 +83,29 @@ div.plates {
   margin: 1rem 0;
 
   * {
-    font-size: min(12vw, 6rem);
+    font-size: min(12vw, 4.5rem);
+  }
+}
+
+/* desktop */
+
+@media screen and (width >=768px) {
+  .container {
+    padding: 0 5.1875rem;
   }
 
-  @media screen and (width >=768px) {
-    width: calc(100% / 3 - 1rem);
-    margin: 0.75rem 0;
+  .suggestions {
+    .plate {
+      width: calc(100% / 3 - 1rem);
+      margin: 0.75rem 0;
 
-    * {
-      font-size: min(8vw, 4rem);
+      * {
+        font-size: min(8vw, 4rem);
+      }
+    }
+
+    :last-child.plate {
+      display: none;
     }
   }
 }
