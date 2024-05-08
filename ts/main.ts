@@ -38,7 +38,7 @@ for (const key in domQueries) {
 //    L.1   keydown
 //      L.1.document keydown
 //  document handleKeydown
-document.addEventListener('keydown', async (event: KeyboardEvent) => {
+document.addEventListener('keydown', (event: KeyboardEvent) => {
   const eventTarget = event.target;
   const plateValueInit = $input.value;
   if (eventTarget !== $input) {
@@ -50,9 +50,16 @@ document.addEventListener('keydown', async (event: KeyboardEvent) => {
       data.plateValue += event.key;
       $input.value = data.plateValue;
     }
+  }
+});
+
+document.addEventListener('keydown', async (event: KeyboardEvent) => {
+  const eventTarget = event.target;
+  if (eventTarget !== $input) {
     await writeSuggestions(data.plateValue);
   }
 });
+
 //      L.1.input keydown
 //  $input handleKeydown
 $input.addEventListener('keydown', (event: KeyboardEvent) => {
