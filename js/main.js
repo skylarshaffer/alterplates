@@ -20,15 +20,19 @@ for (const key in domQueries) {
 //    L.1   keydown
 //      L.1.document keydown
 //  document handleKeydown
-document.addEventListener('keydown', (event) => {
+document.addEventListener('keydown', async (event) => {
   const eventTarget = event.target;
+  const plateValueInit = $input.value;
   if (eventTarget !== $input) {
-    if (event.key === 'Backspace' && $input.value.length > 0) {
-      $input.value = $input.value.substring(0, $input.value.length - 1);
-    } else if (testKeyStrict(event.key) && $input.value.length < 7) {
+    if (event.key === 'Backspace' && plateValueInit.length > 0) {
+      data.plateValue = plateValueInit.substring(0, plateValueInit.length - 1);
+      $input.value = data.plateValue;
+    } else if (testKeyStrict(event.key) && plateValueInit.length < 7) {
       event.preventDefault();
-      $input.value += event.key;
+      data.plateValue += event.key;
+      $input.value = data.plateValue;
     }
+    await writeSuggestions(data.plateValue);
   }
 });
 //      L.1.input keydown
@@ -37,10 +41,17 @@ $input.addEventListener('keydown', (event) => {
   if (!testKey(event.key)) {
     event.preventDefault();
   }
-  $input.selectionStart = $input.selectionEnd = $input.value.length;
 });
-document.addEventListener('keydown', async () => {
-  await writeSuggestions();
+$input.addEventListener('input', () => {
+  $input.selectionStart = $input.selectionEnd = $input.value.length;
+  if ($input.checkValidity()) {
+    data.plateValue = $input.value;
+  } else {
+    $input.value = data.plateValue;
+  }
+});
+$input.addEventListener('input', async () => {
+  await writeSuggestions(data.plateValue);
 });
 function testKey(key) {
   return /[A-Za-z0-9 ]/.test(key);
@@ -140,11 +151,11 @@ async function getSuggestion(
   const requestUrl = getRequestUrl(option, keyword, url);
   return await makeRequest(requestUrl);
 }
-async function writeSuggestions() {
+async function writeSuggestions(plateValue) {
   if ($input.value) {
     $suggestions[0].firstElementChild.textContent = await getSuggestion(
       'soundsLike',
-      $input.value,
+      plateValue,
     );
     $suggestions[1].firstElementChild.textContent = '';
     $suggestions[2].firstElementChild.textContent = '';
@@ -157,6 +168,5 @@ async function writeSuggestions() {
     $suggestions[9].firstElementChild.textContent = '';
   }
 }
-writeSuggestions();
 const exResult = getSuggestion('soundsLike', 'apple');
 console.log(exResult);
