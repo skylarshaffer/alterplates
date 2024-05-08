@@ -1,8 +1,15 @@
+interface Plate extends HTMLDivElement {
+  firstElementChild: HTMLSpanElement;
+}
+
 //  DOM
 //    D.1   variable definition
 //      D.1.plate
 const $plate = document.querySelector('#plate') as HTMLAnchorElement;
 const $input = document.querySelector('input') as HTMLInputElement;
+const $suggestions = document.querySelectorAll(
+  '.suggestions .plate',
+) as NodeListOf<Plate>;
 
 //    D.2   domQueries object
 const domQueries: Record<string, any> = {
@@ -46,3 +53,19 @@ function testKey(key: string): boolean {
 function testKeyStrict(key: string): boolean {
   return /^[A-Za-z0-9 ]$/.test(key);
 }
+
+function getSuggestions(plateNumber: string): void {
+  console.log(plateNumber);
+  $suggestions[0].firstElementChild.textContent = '';
+  $suggestions[1].firstElementChild.textContent = '';
+  $suggestions[2].firstElementChild.textContent = '';
+  $suggestions[3].firstElementChild.textContent = '';
+  $suggestions[4].firstElementChild.textContent = '';
+  $suggestions[5].firstElementChild.textContent = '';
+  $suggestions[6].firstElementChild.textContent = '';
+  $suggestions[7].firstElementChild.textContent = '';
+  $suggestions[8].firstElementChild.textContent = '';
+  $suggestions[9].firstElementChild.textContent = '';
+}
+
+getSuggestions('ASSAFD');
