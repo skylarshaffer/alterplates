@@ -163,10 +163,10 @@ function getRequestUrl(
     if (option.includes('followedWith')) {
       url += `rc=${keyword}&`;
     }
-    if (option.includes('startWith')) {
+    if (option.includes('startsWith')) {
       url += `sp=${keyword}*&`;
     }
-    if (option.includes('endWith')) {
+    if (option.includes('endsWith')) {
       url += `sp=*${keyword}&`;
     }
     //  Related word options
@@ -232,50 +232,55 @@ async function getSuggestion(
   const requestUrl = getRequestUrl(option, keyword, url);
   const responseArr = await makeRequest(requestUrl);
   const newArr = [] as ResponseWord[];
+  if (responseArr.length === 0) {
+    newArr.push({ word: 'none' });
+  }
   responseArr.forEach((responseWord, index, array) => {
     if (responseWord.word.length <= length) {
       newArr.push(array[index]);
+    }
+    if (newArr.length === 0) {
+      newArr.push({ word: 'none' });
     }
   });
   console.log(newArr);
   return newArr[0].word;
 }
 
+const methods = [
+  'meansLike',
+  'soundsLike',
+  'spelledLike',
+  'followsWords',
+  'followedWith',
+  'startsWith',
+  'endsWith',
+  'describesWords',
+  'describedWith',
+  'associatedWith',
+];
+
 async function writeSuggestions(): Promise<void> {
   if (data.plate.value) {
     if (!data.suggestions[data.plate.noNumbers]) {
       const newArray = [] as string[];
-      newArray.push(
-        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
-      );
-      newArray.push(
-        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
-      );
-      newArray.push(
-        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
-      );
-      newArray.push(
-        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
-      );
-      newArray.push(
-        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
-      );
-      newArray.push(
-        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
-      );
-      newArray.push(
-        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
-      );
-      newArray.push(
-        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
-      );
-      newArray.push(
-        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
-      );
-      newArray.push(
-        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
-      );
+      let i2 = 0;
+      for (let i = 0; i < methods.length; i++) {
+        const suggestedWord = resetNumbers(
+          await getSuggestion(methods[i], data.plate.noNumbers),
+        );
+        if (!suggestedWord.includes('none')) {
+          newArray.push(suggestedWord);
+          $suggestions[i2].firstElementChild.textContent = suggestedWord;
+          i2++;
+        }
+      }
       data.suggestions[data.plate.noNumbers] = newArray;
+    } else {
+      for (let i = 0; i < data.suggestions[data.plate.noNumbers].length; i++) {
+        $suggestions[i].firstElementChild.textContent =
+          data.suggestions[data.plate.noNumbers][i];
+      }
     }
   }
 }
@@ -283,9 +288,9 @@ async function writeSuggestions(): Promise<void> {
 async function getSuggestions(): Promise<void> {
   if ($input.value) {
     await writeSuggestions();
+  } else {
     for (let i = 0; i < 10; i++) {
-      $suggestions[i].firstElementChild.textContent =
-        data.suggestions[data.plate.noNumbers][i];
+      $suggestions[i].firstElementChild.textContent = '';
     }
   }
 }
