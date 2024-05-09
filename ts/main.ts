@@ -238,7 +238,8 @@ async function getSuggestion(
   responseArr.forEach((responseWord, index, array) => {
     if (
       responseWord.word.length <= length &&
-      !data.suggestions[data.plate.noNumbers].includes(responseWord.word)
+      !data.suggestions[data.plate.noNumbers].includes(responseWord.word) &&
+      responseWord.word !== data.plate.noNumbers
     ) {
       newArr.push(array[index]);
     }
