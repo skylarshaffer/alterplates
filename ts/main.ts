@@ -26,9 +26,33 @@ const data = {
 
 Object.defineProperty(data.plate, 'noNumbers', {
   get: function () {
-    return this.value.replace(/[0-9]/g, '');
+    return removeNumbers(this.value);
   },
 });
+
+function resetNumbers(suggestion: string): string {
+  let newSuggestion = suggestion;
+  if (data.plate.value !== data.plate.noNumbers) {
+    let i = 0;
+    for (i; i < data.plate.value.length; i++) {
+      if (!isNaN(parseInt(data.plate.value[i]))) {
+        newSuggestion = data.plate.value[i] + newSuggestion;
+      } else {
+        break;
+      }
+    }
+    for (i; i < data.plate.value.length; i++) {
+      if (!isNaN(parseInt(data.plate.value[i]))) {
+        newSuggestion += data.plate.value[i];
+      }
+    }
+  }
+  return newSuggestion;
+}
+
+function removeNumbers(string: string): string {
+  return string.replace(/[0-9]/g, '');
+}
 
 //  DOM
 //    D.1   variable definition
@@ -217,10 +241,12 @@ async function getSuggestion(
 
 async function writeSuggestions(): Promise<void> {
   if ($input.value) {
-    $suggestions[0].firstElementChild.textContent = await getSuggestion(
-      'soundsLike',
-      data.plate.noNumbers,
-      data.plate.noNumbers.length,
+    $suggestions[0].firstElementChild.textContent = resetNumbers(
+      await getSuggestion(
+        'soundsLike',
+        data.plate.noNumbers,
+        data.plate.noNumbers.length,
+      ),
     );
     $suggestions[1].firstElementChild.textContent = '';
     $suggestions[2].firstElementChild.textContent = '';
@@ -233,9 +259,3 @@ async function writeSuggestions(): Promise<void> {
     $suggestions[9].firstElementChild.textContent = '';
   }
 }
-
-const exResult = getSuggestion('soundsLike', 'apple');
-
-console.log(exResult);
-
-console.log(data.plate.noNumbers);
