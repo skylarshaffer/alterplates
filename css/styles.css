@@ -63,7 +63,7 @@ button i {
 }
 
 .plate {
-  background-image: url('../images/Plate.svg');
+  background-image: url('./images/Plate.svg');
   background-size: cover;
   width: 100%;
   aspect-ratio: 2/1;
