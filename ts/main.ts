@@ -66,7 +66,7 @@ const $suggestionsList = document.querySelectorAll(
 ) as NodeListOf<PlateDiv>;
 const $suggestions = document.querySelector('.suggestions') as HTMLDivElement;
 const $dialog = document.querySelector('dialog') as HTMLDialogElement;
-const $confirm = $dialog.querySelector('#confirm') as HTMLAnchorElement;
+const $button = $dialog.querySelector('button') as HTMLButtonElement;
 
 //    D.2   domQueries object
 const domQueries: Record<string, any> = {
@@ -75,7 +75,7 @@ const domQueries: Record<string, any> = {
   $suggestionsList,
   $suggestions,
   $dialog,
-  $confirm,
+  $button,
 };
 
 //    D.3   error checking
@@ -134,6 +134,23 @@ $suggestions.addEventListener('click', (event: Event) => {
   const eventTarget = event.target as HTMLDivElement;
   if (eventTarget.classList.contains('plate')) {
     $dialog.showModal();
+  }
+});
+
+$suggestions.addEventListener('click', (event: Event) => {
+  const eventTarget = event.target as HTMLDivElement;
+  if (eventTarget.classList.contains('plate')) {
+    $dialog.showModal();
+  }
+});
+
+$dialog.addEventListener('click', (event: Event) => {
+  const eventTarget = event.target as HTMLDialogElement;
+  if (eventTarget.id === 'confirm') {
+    console.log('confirm button clicked');
+  }
+  if (eventTarget.nodeName === 'DIALOG') {
+    console.log('dialog clicked');
   }
 });
 

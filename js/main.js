@@ -41,7 +41,7 @@ const $input = document.querySelector('input');
 const $suggestionsList = document.querySelectorAll('.suggestions .plate');
 const $suggestions = document.querySelector('.suggestions');
 const $dialog = document.querySelector('dialog');
-const $confirm = $dialog.querySelector('#confirm');
+const $button = $dialog.querySelector('button');
 //    D.2   domQueries object
 const domQueries = {
   $plate,
@@ -49,7 +49,7 @@ const domQueries = {
   $suggestionsList,
   $suggestions,
   $dialog,
-  $confirm,
+  $button,
 };
 //    D.3   error checking
 for (const key in domQueries) {
@@ -101,6 +101,21 @@ $suggestions.addEventListener('click', (event) => {
   const eventTarget = event.target;
   if (eventTarget.classList.contains('plate')) {
     $dialog.showModal();
+  }
+});
+$suggestions.addEventListener('click', (event) => {
+  const eventTarget = event.target;
+  if (eventTarget.classList.contains('plate')) {
+    $dialog.showModal();
+  }
+});
+$dialog.addEventListener('click', (event) => {
+  const eventTarget = event.target;
+  if (eventTarget.id === 'confirm') {
+    console.log('confirm button clicked');
+  }
+  if (eventTarget.nodeName === 'DIALOG') {
+    console.log('dialog clicked');
   }
 });
 function testKey(key) {
