@@ -4,6 +4,7 @@ const data = {
     value: '',
     noNumbers: '',
   },
+  suggestions: {},
 };
 Object.defineProperty(data.plate, 'noNumbers', {
   get: function () {
@@ -68,7 +69,7 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener('keydown', async (event) => {
   const eventTarget = event.target;
   if (eventTarget !== $input) {
-    await writeSuggestions();
+    await getSuggestions();
   }
 });
 //      L.1.input keydown
@@ -87,7 +88,7 @@ $input.addEventListener('input', () => {
   }
 });
 $input.addEventListener('input', async () => {
-  await writeSuggestions();
+  await getSuggestions();
 });
 function testKey(key) {
   return /[A-Za-z0-9 ]/.test(key);
@@ -186,7 +187,7 @@ async function makeRequest(url) {
 async function getSuggestion(
   option,
   keyword,
-  length = 7,
+  length = 7 - (data.plate.value.length - data.plate.noNumbers.length),
   url = 'https://api.datamuse.com/words?',
 ) {
   const requestUrl = getRequestUrl(option, keyword, url);
@@ -201,22 +202,49 @@ async function getSuggestion(
   return newArr[0].word;
 }
 async function writeSuggestions() {
+  if (data.plate.value) {
+    if (!data.suggestions[data.plate.noNumbers]) {
+      const newArray = [];
+      newArray.push(
+        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
+      );
+      newArray.push(
+        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
+      );
+      newArray.push(
+        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
+      );
+      newArray.push(
+        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
+      );
+      newArray.push(
+        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
+      );
+      newArray.push(
+        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
+      );
+      newArray.push(
+        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
+      );
+      newArray.push(
+        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
+      );
+      newArray.push(
+        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
+      );
+      newArray.push(
+        resetNumbers(await getSuggestion('soundsLike', data.plate.noNumbers)),
+      );
+      data.suggestions[data.plate.noNumbers] = newArray;
+    }
+  }
+}
+async function getSuggestions() {
   if ($input.value) {
-    $suggestions[0].firstElementChild.textContent = resetNumbers(
-      await getSuggestion(
-        'soundsLike',
-        data.plate.noNumbers,
-        data.plate.noNumbers.length,
-      ),
-    );
-    $suggestions[1].firstElementChild.textContent = '';
-    $suggestions[2].firstElementChild.textContent = '';
-    $suggestions[3].firstElementChild.textContent = '';
-    $suggestions[4].firstElementChild.textContent = '';
-    $suggestions[5].firstElementChild.textContent = '';
-    $suggestions[6].firstElementChild.textContent = '';
-    $suggestions[7].firstElementChild.textContent = '';
-    $suggestions[8].firstElementChild.textContent = '';
-    $suggestions[9].firstElementChild.textContent = '';
+    await writeSuggestions();
+    for (let i = 0; i < 10; i++) {
+      $suggestions[i].firstElementChild.textContent =
+        data.suggestions[data.plate.noNumbers][i];
+    }
   }
 }
