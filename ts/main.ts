@@ -243,7 +243,6 @@ async function getSuggestion(
       newArr.push({ word: 'none' });
     }
   });
-  console.log(newArr);
   return newArr[0].word;
 }
 
