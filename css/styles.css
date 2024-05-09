@@ -50,13 +50,6 @@ div.plates {
   width: 100%;
 }
 
-/* desktop responsive */
-@media screen and (width >=768px) {
-  .container {
-    padding: 0 5.1875rem;
-  }
-}
-
 .plate {
   background-image: url('../images/Plate.svg');
   background-size: cover;
@@ -67,6 +60,7 @@ div.plates {
   align-items: center;
   justify-content: center;
   text-align: justify;
+  margin: 1rem 0;
 }
 
 .plate * {
@@ -78,17 +72,45 @@ div.plates {
   outline: none;
   font-family: var(--font-sofia-sans);
   text-transform: uppercase;
-  font-size: min(24vw, 12rem);
+  font-size: min(24vw, 9rem);
   font-weight: 400;
   text-align: center;
   color: var(--plate-text-color);
 }
 
-.suggestions .plate * {
-  font-size: min(12vw, 6rem);
+.suggestions .plate {
+  width: calc(50% - 1rem);
+  margin: 1rem 0;
 
-  @media screen and (width >=768px) {
-    font-size: min(8vw, 4rem);
+  * {
+    font-size: min(12vw, 4.5rem);
+  }
+}
+
+/* desktop */
+
+@media screen and (width >=768px) {
+  .plate * {
+    font-size: min(22vw, 12rem);
+  }
+
+  .container {
+    padding: 0 5.1875rem;
+  }
+
+  .suggestions {
+    .plate {
+      width: calc(100% / 3 - 1rem);
+      margin: 0.75rem 0;
+
+      * {
+        font-size: min(8vw, 4rem);
+      }
+    }
+
+    :last-child.plate {
+      display: none;
+    }
   }
 }
 
@@ -97,5 +119,15 @@ div.plates {
 }
 
 .plate span:not(.suggestions span) {
+  display: none;
+}
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.column-full:has(input:placeholder-shown) + .suggestions {
   display: none;
 }
