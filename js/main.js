@@ -113,9 +113,10 @@ $dialog.addEventListener('click', (event) => {
   const eventTarget = event.target;
   if (eventTarget.id === 'confirm') {
     console.log('confirm button clicked');
-  }
-  if (eventTarget.nodeName === 'DIALOG') {
-    console.log('dialog clicked');
+  } else if (eventTarget.id === 'delete') {
+    console.log('delete button clicked');
+  } else {
+    $dialog.close();
   }
 });
 function testKey(key) {

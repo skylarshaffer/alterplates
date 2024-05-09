@@ -148,9 +148,10 @@ $dialog.addEventListener('click', (event: Event) => {
   const eventTarget = event.target as HTMLDialogElement;
   if (eventTarget.id === 'confirm') {
     console.log('confirm button clicked');
-  }
-  if (eventTarget.nodeName === 'DIALOG') {
-    console.log('dialog clicked');
+  } else if (eventTarget.id === 'delete') {
+    console.log('delete button clicked');
+  } else {
+    $dialog.close();
   }
 });
 
