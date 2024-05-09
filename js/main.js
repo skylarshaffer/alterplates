@@ -102,7 +102,10 @@ $suggestions.addEventListener('click', (event) => {
   console.log(eventTarget);
   if (eventTarget.classList.contains('plate')) {
     $dialog.showModal();
-  } else if (eventTarget.nodeName === 'BUTTON') {
+  } else if (
+    eventTarget.nodeName === 'BUTTON' ||
+    eventTarget.nodeName === 'DIALOG'
+  ) {
     const $currentDialog = eventTarget.closest('dialog');
     if (eventTarget.classList.contains('confirm')) {
       $currentDialog.close();
