@@ -1,6 +1,15 @@
 'use strict';
-const data = { plateValue: '' };
-console.log(data);
+const data = {
+  plate: {
+    value: '',
+    noNumbers: '',
+  },
+};
+Object.defineProperty(data.plate, 'noNumbers', {
+  get: function () {
+    return this.value.replace(/[0-9]/g, '');
+  },
+});
 //  DOM
 //    D.1   variable definition
 //      D.1.plate
@@ -25,19 +34,19 @@ document.addEventListener('keydown', (event) => {
   const plateValueInit = $input.value;
   if (eventTarget !== $input) {
     if (event.key === 'Backspace' && plateValueInit.length > 0) {
-      data.plateValue = plateValueInit.substring(0, plateValueInit.length - 1);
-      $input.value = data.plateValue;
+      data.plate.value = plateValueInit.substring(0, plateValueInit.length - 1);
+      $input.value = data.plate.value;
     } else if (testKeyStrict(event.key) && plateValueInit.length < 7) {
       event.preventDefault();
-      data.plateValue += event.key;
-      $input.value = data.plateValue;
+      data.plate.value += event.key;
+      $input.value = data.plate.value;
     }
   }
 });
 document.addEventListener('keydown', async (event) => {
   const eventTarget = event.target;
   if (eventTarget !== $input) {
-    await writeSuggestions(data.plateValue);
+    await writeSuggestions();
   }
 });
 //      L.1.input keydown
@@ -50,13 +59,13 @@ $input.addEventListener('keydown', (event) => {
 $input.addEventListener('input', () => {
   $input.selectionStart = $input.selectionEnd = $input.value.length;
   if ($input.checkValidity()) {
-    data.plateValue = $input.value;
+    data.plate.value = $input.value;
   } else {
-    $input.value = data.plateValue;
+    $input.value = data.plate.value;
   }
 });
 $input.addEventListener('input', async () => {
-  await writeSuggestions(data.plateValue);
+  await writeSuggestions();
 });
 function testKey(key) {
   return /[A-Za-z0-9 ]/.test(key);
@@ -124,14 +133,14 @@ function getRequestUrl(
   return url;
 }
 async function makeRequest(url) {
-  let newArr = [];
+  let responseArr = [];
   try {
     const response = await fetch(url);
     try {
       if (!response) throw new Error();
       try {
         if (response.ok !== true) throw new Error();
-        newArr = await response.json();
+        responseArr = await response.json();
       } catch (e) {
         try {
           console.log(
@@ -150,21 +159,31 @@ async function makeRequest(url) {
   } catch (e) {
     console.log('Endpoint does not exist or fetch failed.', e);
   }
-  return newArr[0].word;
+  return responseArr;
 }
 async function getSuggestion(
   option,
   keyword,
+  length = 7,
   url = 'https://api.datamuse.com/words?',
 ) {
   const requestUrl = getRequestUrl(option, keyword, url);
-  return await makeRequest(requestUrl);
+  const responseArr = await makeRequest(requestUrl);
+  const newArr = [];
+  responseArr.forEach((responseWord, index, array) => {
+    if (responseWord.word.length <= length) {
+      newArr.push(array[index]);
+    }
+  });
+  console.log(newArr);
+  return newArr[0].word;
 }
-async function writeSuggestions(plateValue) {
+async function writeSuggestions() {
   if ($input.value) {
     $suggestions[0].firstElementChild.textContent = await getSuggestion(
       'soundsLike',
-      plateValue,
+      data.plate.noNumbers,
+      data.plate.noNumbers.length,
     );
     $suggestions[1].firstElementChild.textContent = '';
     $suggestions[2].firstElementChild.textContent = '';
@@ -179,3 +198,4 @@ async function writeSuggestions(plateValue) {
 }
 const exResult = getSuggestion('soundsLike', 'apple');
 console.log(exResult);
+console.log(data.plate.noNumbers);

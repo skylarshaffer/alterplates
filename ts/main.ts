@@ -1,4 +1,4 @@
-interface Plate extends HTMLDivElement {
+interface PlateDiv extends HTMLDivElement {
   firstElementChild: HTMLSpanElement;
 }
 
@@ -8,12 +8,27 @@ interface ResponseWord {
   numSyllables?: number;
 }
 
-interface Data {
-  plateValue: string;
+interface Plate {
+  value: string;
+  noNumbers: string;
 }
 
-const data = { plateValue: '' } as Data;
-console.log(data);
+interface Data {
+  plate: Plate;
+}
+
+const data = {
+  plate: {
+    value: '',
+    noNumbers: '',
+  },
+} as Data;
+
+Object.defineProperty(data.plate, 'noNumbers', {
+  get: function () {
+    return this.value.replace(/[0-9]/g, '');
+  },
+});
 
 //  DOM
 //    D.1   variable definition
@@ -22,7 +37,7 @@ const $plate = document.querySelector('#plate') as HTMLAnchorElement;
 const $input = document.querySelector('input') as HTMLInputElement;
 const $suggestions = document.querySelectorAll(
   '.suggestions .plate',
-) as NodeListOf<Plate>;
+) as NodeListOf<PlateDiv>;
 
 //    D.2   domQueries object
 const domQueries: Record<string, any> = {
@@ -44,12 +59,12 @@ document.addEventListener('keydown', (event: KeyboardEvent) => {
   const plateValueInit = $input.value;
   if (eventTarget !== $input) {
     if (event.key === 'Backspace' && plateValueInit.length > 0) {
-      data.plateValue = plateValueInit.substring(0, plateValueInit.length - 1);
-      $input.value = data.plateValue;
+      data.plate.value = plateValueInit.substring(0, plateValueInit.length - 1);
+      $input.value = data.plate.value;
     } else if (testKeyStrict(event.key) && plateValueInit.length < 7) {
       event.preventDefault();
-      data.plateValue += event.key;
-      $input.value = data.plateValue;
+      data.plate.value += event.key;
+      $input.value = data.plate.value;
     }
   }
 });
@@ -57,7 +72,7 @@ document.addEventListener('keydown', (event: KeyboardEvent) => {
 document.addEventListener('keydown', async (event: KeyboardEvent) => {
   const eventTarget = event.target;
   if (eventTarget !== $input) {
-    await writeSuggestions(data.plateValue);
+    await writeSuggestions();
   }
 });
 
@@ -72,14 +87,14 @@ $input.addEventListener('keydown', (event: KeyboardEvent) => {
 $input.addEventListener('input', () => {
   $input.selectionStart = $input.selectionEnd = $input.value.length;
   if ($input.checkValidity()) {
-    data.plateValue = $input.value;
+    data.plate.value = $input.value;
   } else {
-    $input.value = data.plateValue;
+    $input.value = data.plate.value;
   }
 });
 
 $input.addEventListener('input', async () => {
-  await writeSuggestions(data.plateValue);
+  await writeSuggestions();
 });
 
 function testKey(key: string): boolean {
@@ -150,15 +165,15 @@ function getRequestUrl(
   return url;
 }
 
-async function makeRequest(url: string): Promise<string> {
-  let newArr = [] as ResponseWord[];
+async function makeRequest(url: string): Promise<ResponseWord[]> {
+  let responseArr = [] as ResponseWord[];
   try {
     const response = await fetch(url);
     try {
       if (!response) throw new Error();
       try {
         if (response.ok !== true) throw new Error();
-        newArr = await response.json();
+        responseArr = await response.json();
       } catch (e) {
         try {
           console.log(
@@ -179,23 +194,33 @@ async function makeRequest(url: string): Promise<string> {
   } catch (e) {
     console.log('Endpoint does not exist or fetch failed.', e);
   }
-  return newArr[0].word;
+  return responseArr;
 }
 
 async function getSuggestion(
   option: string,
   keyword: string,
+  length: number = 7,
   url: string = 'https://api.datamuse.com/words?',
 ): Promise<string> {
   const requestUrl = getRequestUrl(option, keyword, url);
-  return await makeRequest(requestUrl);
+  const responseArr = await makeRequest(requestUrl);
+  const newArr = [] as ResponseWord[];
+  responseArr.forEach((responseWord, index, array) => {
+    if (responseWord.word.length <= length) {
+      newArr.push(array[index]);
+    }
+  });
+  console.log(newArr);
+  return newArr[0].word;
 }
 
-async function writeSuggestions(plateValue: string): Promise<void> {
+async function writeSuggestions(): Promise<void> {
   if ($input.value) {
     $suggestions[0].firstElementChild.textContent = await getSuggestion(
       'soundsLike',
-      plateValue,
+      data.plate.noNumbers,
+      data.plate.noNumbers.length,
     );
     $suggestions[1].firstElementChild.textContent = '';
     $suggestions[2].firstElementChild.textContent = '';
@@ -212,3 +237,5 @@ async function writeSuggestions(plateValue: string): Promise<void> {
 const exResult = getSuggestion('soundsLike', 'apple');
 
 console.log(exResult);
+
+console.log(data.plate.noNumbers);
