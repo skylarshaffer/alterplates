@@ -15,6 +15,9 @@
   --logo-color: var(--palette-pure-white);
   --plate-text-color: var(--palette-license-plate-blue);
   --header-color: var(--palette-alterplates-blue);
+  --add-favorite-color: var(--palette-alterplates-blue);
+  --remove-favorite-color: var(--palette-california-red);
+  --button-text-color: var(--palette-pure-white);
 }
 
 body {
@@ -114,7 +117,8 @@ div.plates {
   }
 }
 
-span {
+span,
+button i {
   pointer-events: none;
 }
 
@@ -134,4 +138,24 @@ span {
 
 .column-full:has(input:placeholder-shown) + .suggestions {
   display: none;
+}
+
+dialog {
+  box-sizing: content-box;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
+button {
+  display: flex;
+  font-size: 1.5rem;
+  border: 0;
+  border-radius: 0.25rem;
+  height: 2.5rem;
+  width: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--add-favorite-color);
+  color: var(--button-text-color);
 }
