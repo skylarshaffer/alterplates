@@ -53,6 +53,11 @@ div.plates {
   width: 100%;
 }
 
+span,
+button i {
+  pointer-events: none;
+}
+
 .plate {
   background-image: url('../images/Plate.svg');
   background-size: cover;
@@ -66,7 +71,8 @@ div.plates {
   margin: 1rem 0;
 }
 
-.plate * {
+.plate span,
+.plate input {
   position: relative;
   top: 10%;
   width: 100%;
@@ -85,7 +91,7 @@ div.plates {
   width: calc(50% - 1rem);
   margin: 1rem 0;
 
-  * {
+  span {
     font-size: min(12vw, 4.5rem);
   }
 }
@@ -93,7 +99,7 @@ div.plates {
 /* desktop */
 
 @media screen and (width >=768px) {
-  .plate * {
+  .plate span {
     font-size: min(22vw, 12rem);
   }
 
@@ -106,7 +112,7 @@ div.plates {
       width: calc(100% / 3 - 1rem);
       margin: 0.75rem 0;
 
-      * {
+      span {
         font-size: min(8vw, 4rem);
       }
     }
@@ -115,11 +121,6 @@ div.plates {
       display: none;
     }
   }
-}
-
-span,
-button i {
-  pointer-events: none;
 }
 
 .suggestions .plate input {

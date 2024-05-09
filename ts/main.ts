@@ -131,27 +131,27 @@ $input.addEventListener('input', async () => {
 });
 
 $suggestions.addEventListener('click', (event: Event) => {
-  const eventTarget = event.target as HTMLDivElement;
+  const eventTarget = event.target as HTMLDivElement | HTMLButtonElement;
+  console.log(eventTarget);
   if (eventTarget.classList.contains('plate')) {
     $dialog.showModal();
+  } else if (eventTarget.nodeName === 'BUTTON') {
+    const $currentDialog = eventTarget.closest('dialog') as HTMLDialogElement;
+    if (eventTarget.classList.contains('confirm')) {
+      $currentDialog.close();
+    } else if (eventTarget.classList.contains('delete')) {
+      $currentDialog.close();
+    } else {
+      $currentDialog.close();
+    }
   }
 });
 
 $suggestions.addEventListener('click', (event: Event) => {
   const eventTarget = event.target as HTMLDivElement;
   if (eventTarget.classList.contains('plate')) {
-    $dialog.showModal();
-  }
-});
-
-$dialog.addEventListener('click', (event: Event) => {
-  const eventTarget = event.target as HTMLDialogElement;
-  if (eventTarget.id === 'confirm') {
-    console.log('confirm button clicked');
-  } else if (eventTarget.id === 'delete') {
-    console.log('delete button clicked');
-  } else {
-    $dialog.close();
+    const uniqueDialog = eventTarget.children[1] as HTMLDialogElement;
+    uniqueDialog.showModal();
   }
 });
 
