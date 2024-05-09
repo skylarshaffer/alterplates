@@ -20,7 +20,7 @@ for (const key in domQueries) {
 //    L.1   keydown
 //      L.1.document keydown
 //  document handleKeydown
-document.addEventListener('keydown', async (event) => {
+document.addEventListener('keydown', (event) => {
   const eventTarget = event.target;
   const plateValueInit = $input.value;
   if (eventTarget !== $input) {
@@ -32,6 +32,11 @@ document.addEventListener('keydown', async (event) => {
       data.plateValue += event.key;
       $input.value = data.plateValue;
     }
+  }
+});
+document.addEventListener('keydown', async (event) => {
+  const eventTarget = event.target;
+  if (eventTarget !== $input) {
     await writeSuggestions(data.plateValue);
   }
 });
@@ -91,6 +96,12 @@ function getRequestUrl(
     if (option.includes('followedWith')) {
       url += `rc=${keyword}&`;
     }
+    if (option.includes('startWith')) {
+      url += `sp=${keyword}*&`;
+    }
+    if (option.includes('endWith')) {
+      url += `sp=*${keyword}&`;
+    }
     //  Related word options
     if (option.includes('describesWords')) {
       url += `rel_jja=${keyword}&`;
@@ -101,16 +112,14 @@ function getRequestUrl(
     if (option.includes('associatedWith')) {
       url += `rel_trg=${keyword}&`;
     }
-    if (option.includes('startWith')) {
-      url += `sp=${keyword}*&`;
-    }
-    if (option.includes('endWith')) {
-      url += `sp=*${keyword}&`;
-    }
   }
   //  Trim last &amp;
   if (url.endsWith('&')) {
-    url = url.substring(0, url.length - 1);
+    if (url.includes('max')) {
+      url = url.substring(0, url.length - 1);
+    } else {
+      url += 'max=10';
+    }
   }
   return url;
 }

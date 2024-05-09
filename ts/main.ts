@@ -4,7 +4,8 @@ interface Plate extends HTMLDivElement {
 
 interface ResponseWord {
   word: string;
-  score: number;
+  score?: number;
+  numSyllables?: number;
 }
 
 interface Data {
@@ -121,6 +122,12 @@ function getRequestUrl(
     if (option.includes('followedWith')) {
       url += `rc=${keyword}&`;
     }
+    if (option.includes('startWith')) {
+      url += `sp=${keyword}*&`;
+    }
+    if (option.includes('endWith')) {
+      url += `sp=*${keyword}&`;
+    }
     //  Related word options
     if (option.includes('describesWords')) {
       url += `rel_jja=${keyword}&`;
@@ -131,16 +138,14 @@ function getRequestUrl(
     if (option.includes('associatedWith')) {
       url += `rel_trg=${keyword}&`;
     }
-    if (option.includes('startWith')) {
-      url += `sp=${keyword}*&`;
-    }
-    if (option.includes('endWith')) {
-      url += `sp=*${keyword}&`;
-    }
   }
   //  Trim last &amp;
   if (url.endsWith('&')) {
-    url = url.substring(0, url.length - 1);
+    if (url.includes('max')) {
+      url = url.substring(0, url.length - 1);
+    } else {
+      url += 'max=10';
+    }
   }
   return url;
 }
