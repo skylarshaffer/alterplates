@@ -38,11 +38,18 @@ function removeNumbers(string) {
 //      D.1.plate
 const $plate = document.querySelector('#plate');
 const $input = document.querySelector('input');
-const $suggestions = document.querySelectorAll('.suggestions .plate');
+const $suggestionsList = document.querySelectorAll('.suggestions .plate');
+const $suggestions = document.querySelector('.suggestions');
+const $dialog = document.querySelector('dialog');
+const $confirm = $dialog.querySelector('#confirm');
 //    D.2   domQueries object
 const domQueries = {
   $plate,
   $input,
+  $suggestionsList,
+  $suggestions,
+  $dialog,
+  $confirm,
 };
 //    D.3   error checking
 for (const key in domQueries) {
@@ -89,6 +96,12 @@ $input.addEventListener('input', () => {
 });
 $input.addEventListener('input', async () => {
   await getSuggestions();
+});
+$suggestions.addEventListener('click', (event) => {
+  const eventTarget = event.target;
+  if (eventTarget.classList.contains('plate')) {
+    $dialog.showModal();
+  }
 });
 function testKey(key) {
   return /[A-Za-z0-9 ]/.test(key);
@@ -233,13 +246,13 @@ async function writeSuggestions() {
         );
         if (!suggestedWord.includes('none')) {
           data.suggestions[data.plate.noNumbers].push(suggestedWord);
-          $suggestions[i2].firstElementChild.textContent = suggestedWord;
+          $suggestionsList[i2].firstElementChild.textContent = suggestedWord;
           i2++;
         }
       }
     } else {
       for (let i = 0; i < data.suggestions[data.plate.noNumbers].length; i++) {
-        $suggestions[i].firstElementChild.textContent =
+        $suggestionsList[i].firstElementChild.textContent =
           data.suggestions[data.plate.noNumbers][i];
       }
     }
@@ -250,7 +263,7 @@ async function getSuggestions() {
     await writeSuggestions();
   } else {
     for (let i = 0; i < 10; i++) {
-      $suggestions[i].firstElementChild.textContent = '';
+      $suggestionsList[i].firstElementChild.textContent = '';
     }
   }
 }

@@ -61,14 +61,21 @@ function removeNumbers(string: string): string {
 //      D.1.plate
 const $plate = document.querySelector('#plate') as HTMLAnchorElement;
 const $input = document.querySelector('input') as HTMLInputElement;
-const $suggestions = document.querySelectorAll(
+const $suggestionsList = document.querySelectorAll(
   '.suggestions .plate',
 ) as NodeListOf<PlateDiv>;
+const $suggestions = document.querySelector('.suggestions') as HTMLDivElement;
+const $dialog = document.querySelector('dialog') as HTMLDialogElement;
+const $confirm = $dialog.querySelector('#confirm') as HTMLAnchorElement;
 
 //    D.2   domQueries object
 const domQueries: Record<string, any> = {
   $plate,
   $input,
+  $suggestionsList,
+  $suggestions,
+  $dialog,
+  $confirm,
 };
 
 //    D.3   error checking
@@ -121,6 +128,13 @@ $input.addEventListener('input', () => {
 
 $input.addEventListener('input', async () => {
   await getSuggestions();
+});
+
+$suggestions.addEventListener('click', (event: Event) => {
+  const eventTarget = event.target as HTMLDivElement;
+  if (eventTarget.classList.contains('plate')) {
+    $dialog.showModal();
+  }
 });
 
 function testKey(key: string): boolean {
@@ -274,13 +288,13 @@ async function writeSuggestions(): Promise<void> {
         );
         if (!suggestedWord.includes('none')) {
           data.suggestions[data.plate.noNumbers].push(suggestedWord);
-          $suggestions[i2].firstElementChild.textContent = suggestedWord;
+          $suggestionsList[i2].firstElementChild.textContent = suggestedWord;
           i2++;
         }
       }
     } else {
       for (let i = 0; i < data.suggestions[data.plate.noNumbers].length; i++) {
-        $suggestions[i].firstElementChild.textContent =
+        $suggestionsList[i].firstElementChild.textContent =
           data.suggestions[data.plate.noNumbers][i];
       }
     }
@@ -292,7 +306,7 @@ async function getSuggestions(): Promise<void> {
     await writeSuggestions();
   } else {
     for (let i = 0; i < 10; i++) {
-      $suggestions[i].firstElementChild.textContent = '';
+      $suggestionsList[i].firstElementChild.textContent = '';
     }
   }
 }

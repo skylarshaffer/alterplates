@@ -114,6 +114,10 @@ div.plates {
   }
 }
 
+span {
+  pointer-events: none;
+}
+
 .suggestions .plate input {
   display: none;
 }
