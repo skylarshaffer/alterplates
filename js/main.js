@@ -197,14 +197,16 @@ async function getSuggestion(
     newArr.push({ word: 'none' });
   }
   responseArr.forEach((responseWord, index, array) => {
-    if (responseWord.word.length <= length) {
+    if (
+      responseWord.word.length <= length &&
+      !data.suggestions[data.plate.noNumbers].includes(responseWord.word)
+    ) {
       newArr.push(array[index]);
     }
     if (newArr.length === 0) {
       newArr.push({ word: 'none' });
     }
   });
-  console.log(newArr);
   return newArr[0].word;
 }
 const methods = [
@@ -222,19 +224,18 @@ const methods = [
 async function writeSuggestions() {
   if (data.plate.value) {
     if (!data.suggestions[data.plate.noNumbers]) {
-      const newArray = [];
+      data.suggestions[data.plate.noNumbers] = [];
       let i2 = 0;
       for (let i = 0; i < methods.length; i++) {
         const suggestedWord = resetNumbers(
           await getSuggestion(methods[i], data.plate.noNumbers),
         );
         if (!suggestedWord.includes('none')) {
-          newArray.push(suggestedWord);
+          data.suggestions[data.plate.noNumbers].push(suggestedWord);
           $suggestions[i2].firstElementChild.textContent = suggestedWord;
           i2++;
         }
       }
-      data.suggestions[data.plate.noNumbers] = newArray;
     } else {
       for (let i = 0; i < data.suggestions[data.plate.noNumbers].length; i++) {
         $suggestions[i].firstElementChild.textContent =
