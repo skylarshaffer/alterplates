@@ -53,6 +53,10 @@ div.plates {
   width: 100%;
 }
 
+div.plate {
+  position: relative;
+}
+
 span,
 button i {
   pointer-events: none;
@@ -142,10 +146,10 @@ button i {
 }
 
 dialog {
-  box-sizing: content-box;
   padding: 0;
   border: none;
   background-color: transparent;
+  position: absolute;
 }
 
 button {
