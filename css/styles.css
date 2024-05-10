@@ -105,6 +105,7 @@ button i {
 .suggestions .plate {
   width: calc(50% - 1rem);
   margin: 1rem 0;
+  cursor: pointer;
 
   span {
     font-size: min(12vw, 4.5rem);
@@ -114,7 +115,7 @@ button i {
 /* desktop */
 
 @media screen and (width >=768px) {
-  .plate span {
+  .plate input {
     font-size: min(22vw, 12rem);
   }
 
@@ -165,6 +166,7 @@ dialog {
 }
 
 button {
+  cursor: pointer;
   display: flex;
   font-size: 1.5rem;
   border: 0;
