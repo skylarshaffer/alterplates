@@ -135,7 +135,6 @@ $backdrop.addEventListener('click', () => {
 
 $suggestions.addEventListener('click', (event: Event) => {
   const eventTarget = event.target as HTMLDivElement | HTMLButtonElement;
-  console.log(eventTarget);
   if (eventTarget.classList.contains('plate')) {
     const uniqueDialog = eventTarget.children[1] as HTMLDialogElement;
     uniqueDialog.show();
