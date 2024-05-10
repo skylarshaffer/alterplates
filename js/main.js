@@ -44,7 +44,8 @@ const $backdropSuggestions = document.querySelector(
   '.backdrop:has(+ main.container',
 );
 const $favorites = document.querySelector('.favorites');
-const $favoritesList = document.querySelector('.favorites-list');
+const $favoritesList = $favorites.querySelector('.favorites-list');
+const $favoritesButton = $favorites.querySelector('.favorites .navbar button');
 //    D.2   domQueries object
 const domQueries = {
   $plate,
@@ -54,6 +55,7 @@ const domQueries = {
   $backdropSuggestions,
   $favorites,
   $favoritesList,
+  $favoritesButton,
 };
 //    D.3   error checking
 for (const key in domQueries) {
@@ -100,6 +102,13 @@ $input.addEventListener('input', () => {
 });
 $input.addEventListener('input', async () => {
   await getSuggestions();
+});
+$favoritesButton.addEventListener('click', () => {
+  if ($favorites.classList.contains('closed')) {
+    $favorites.classList.remove('closed');
+  } else {
+    $favorites.classList.add('closed');
+  }
 });
 $backdropSuggestions.addEventListener('click', () => {
   document.querySelector('dialog[open]').close();
@@ -322,3 +331,6 @@ async function getSuggestions() {
 //             </button>
 //           </dialog>
 //         </div>
+if (window.innerWidth < 768) {
+  $favorites.classList.add('closed');
+}

@@ -258,3 +258,13 @@ div.backdrop:has(+ main.container dialog[open]) {
   display: block;
   z-index: 1;
 }
+
+.favorites.container.closed {
+  height: auto;
+  background-color: transparent;
+  max-width: 5.5rem;
+
+  span {
+    display: none;
+  }
+}

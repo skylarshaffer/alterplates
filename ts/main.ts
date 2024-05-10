@@ -69,9 +69,12 @@ const $backdropSuggestions = document.querySelector(
   '.backdrop:has(+ main.container',
 ) as HTMLDivElement;
 const $favorites = document.querySelector('.favorites') as HTMLDivElement;
-const $favoritesList = document.querySelector(
+const $favoritesList = $favorites.querySelector(
   '.favorites-list',
 ) as HTMLDivElement;
+const $favoritesButton = $favorites.querySelector(
+  '.favorites .navbar button',
+) as HTMLButtonElement;
 
 //    D.2   domQueries object
 const domQueries: Record<string, any> = {
@@ -82,6 +85,7 @@ const domQueries: Record<string, any> = {
   $backdropSuggestions,
   $favorites,
   $favoritesList,
+  $favoritesButton,
 };
 
 //    D.3   error checking
@@ -134,6 +138,14 @@ $input.addEventListener('input', () => {
 
 $input.addEventListener('input', async () => {
   await getSuggestions();
+});
+
+$favoritesButton.addEventListener('click', () => {
+  if ($favorites.classList.contains('closed')) {
+    $favorites.classList.remove('closed');
+  } else {
+    $favorites.classList.add('closed');
+  }
 });
 
 $backdropSuggestions.addEventListener('click', () => {
@@ -370,3 +382,7 @@ async function getSuggestions(): Promise<void> {
 //             </button>
 //           </dialog>
 //         </div>
+
+if (window.innerWidth < 768) {
+  $favorites.classList.add('closed');
+}
