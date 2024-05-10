@@ -338,3 +338,12 @@ async function getSuggestions(): Promise<void> {
     }
   }
 }
+
+// <div class="plate">
+//           <span></span>
+//           <dialog>
+//             <button class="confirm">
+//               <i class="fa-solid fa-star"></i>
+//             </button>
+//           </dialog>
+//         </div>
