@@ -311,6 +311,7 @@ async function getSuggestion(
   if (responseArr.length === 0) {
     newArr.push({ word: 'none' });
   }
+  console.log(responseArr);
   responseArr.forEach((responseWord, index, array) => {
     if (
       responseWord.word.length <= length &&
@@ -322,11 +323,30 @@ async function getSuggestion(
     if (newArr.length === 0) {
       newArr.push({ word: 'none' });
     }
+    console.log(newArr);
   });
-  return newArr[0].word;
+  let finalSuggestion = newArr[0].word;
+  for (let i = 0; i < newArr.length; i++) {
+    if (newArr[i].word !== 'none') {
+      console.log(newArr[i].word);
+      finalSuggestion = newArr[i].word;
+      break;
+    }
+  }
+  return finalSuggestion;
 }
 
 const methods = [
+  'meansLike',
+  'soundsLike',
+  'spelledLike',
+  'followsWords',
+  'followedWith',
+  'startsWith',
+  'endsWith',
+  'describesWords',
+  'describedWith',
+  'associatedWith',
   'meansLike',
   'soundsLike',
   'spelledLike',
@@ -348,6 +368,7 @@ async function writeSuggestions(): Promise<void> {
         const suggestedWord = resetNumbers(
           await getSuggestion(methods[i], data.plate.noNumbers),
         );
+        console.log(suggestedWord);
         if (!suggestedWord.includes('none')) {
           data.suggestions[data.plate.noNumbers].push(suggestedWord);
           $suggestionsList[i2].firstElementChild.textContent = suggestedWord;
