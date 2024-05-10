@@ -65,7 +65,9 @@ const $suggestionsList = document.querySelectorAll(
   '.suggestions .plate',
 ) as NodeListOf<PlateDiv>;
 const $suggestions = document.querySelector('.suggestions') as HTMLDivElement;
-const $backdrop = document.querySelector('.backdrop') as HTMLDivElement;
+const $backdropSuggestions = document.querySelector(
+  '.backdrop:has(+ main.container',
+) as HTMLDivElement;
 const $favorites = document.querySelector('.favorites') as HTMLDivElement;
 
 //    D.2   domQueries object
@@ -74,7 +76,7 @@ const domQueries: Record<string, any> = {
   $input,
   $suggestionsList,
   $suggestions,
-  $backdrop,
+  $backdropSuggestions,
   $favorites,
 };
 
@@ -130,7 +132,7 @@ $input.addEventListener('input', async () => {
   await getSuggestions();
 });
 
-$backdrop.addEventListener('click', () => {
+$backdropSuggestions.addEventListener('click', () => {
   (document.querySelector('dialog[open]') as HTMLDialogElement).close();
 });
 
@@ -156,20 +158,24 @@ $suggestions.addEventListener('click', (event: Event) => {
 
 $favorites.addEventListener('click', (event: Event) => {
   const eventTarget = event.target as HTMLDivElement | HTMLButtonElement;
+  console.log(eventTarget);
   if (eventTarget.classList.contains('plate')) {
     const uniqueDialog = eventTarget.children[2] as HTMLDialogElement;
     uniqueDialog.show();
   } else if (
     eventTarget.nodeName === 'BUTTON' ||
-    eventTarget.nodeName === 'DIALOG'
+    eventTarget.nodeName === 'DIALOG' ||
+    eventTarget.classList.contains('backdrop')
   ) {
     const $currentDialog = eventTarget.closest('dialog') as HTMLDialogElement;
+    const $currentPlate = eventTarget.closest('div.plate') as HTMLDialogElement;
     if (eventTarget.classList.contains('confirm')) {
       $currentDialog.close();
     } else if (eventTarget.classList.contains('delete')) {
+      $currentPlate.remove();
       $currentDialog.close();
     } else {
-      $currentDialog.close();
+      (document.querySelector('dialog[open]') as HTMLDialogElement).close();
     }
   }
 });

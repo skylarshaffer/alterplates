@@ -37,7 +37,6 @@ body {
   height: 100%;
   background-color: var(--overlay-color);
   backdrop-filter: blur(5px);
-  z-index: 2;
 }
 
 /* colors */
@@ -222,11 +221,11 @@ button {
 
 .favorites .navbar {
   padding: 0.5rem 0;
-  z-index: 3;
+  z-index: 4;
 }
 
 .plate:has(dialog[open]) {
-  z-index: 3;
+  z-index: 5;
 }
 
 .favorites {
@@ -236,13 +235,20 @@ button {
   width: 50%;
   background-color: var(--favorites-bar-color);
   flex-direction: column;
-  z-index: 1;
+  z-index: 2;
 }
 
 div.backdrop {
   display: none;
 }
 
+div.backdrop:has(+ .favorites-list dialog[open]) {
+  display: block;
+  z-index: 3;
+  margin-left: -1rem;
+}
+
 div.backdrop:has(+ main.container dialog[open]) {
   display: block;
+  z-index: 1;
 }
