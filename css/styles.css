@@ -86,12 +86,6 @@ button i {
   margin: 1rem 0;
 }
 
-.favorites .plate,
-.suggestions .plate {
-  max-width: 255.5px;
-  cursor: pointer;
-}
-
 .plate span,
 .plate input {
   position: relative;
@@ -108,13 +102,19 @@ button i {
   color: var(--plate-text-color);
 }
 
+.favorites .plate,
 .suggestions .plate {
-  width: calc(50% - 1rem);
-  margin: 1rem 0;
+  max-width: 255.5px;
+  cursor: pointer;
 
   span {
     font-size: min(12vw, 4.5rem);
   }
+}
+
+.suggestions .plate {
+  width: calc(50% - 1rem);
+  margin: 1rem 0;
 }
 
 /* desktop */
@@ -137,6 +137,12 @@ button i {
   .favorites {
     width: 252px;
     max-width: 252px;
+
+    .plate {
+      span {
+        font-size: min(8vw, 4rem);
+      }
+    }
   }
 
   .suggestions {

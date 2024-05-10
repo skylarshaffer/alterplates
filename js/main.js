@@ -44,6 +44,7 @@ const $backdropSuggestions = document.querySelector(
   '.backdrop:has(+ main.container',
 );
 const $favorites = document.querySelector('.favorites');
+const $favoritesList = document.querySelector('.favorites-list');
 //    D.2   domQueries object
 const domQueries = {
   $plate,
@@ -52,6 +53,7 @@ const domQueries = {
   $suggestions,
   $backdropSuggestions,
   $favorites,
+  $favoritesList,
 };
 //    D.3   error checking
 for (const key in domQueries) {
@@ -112,8 +114,12 @@ $suggestions.addEventListener('click', (event) => {
     eventTarget.nodeName === 'DIALOG'
   ) {
     const $currentDialog = eventTarget.closest('dialog');
+    const $currentPlate = eventTarget.closest('div.plate');
     if (eventTarget.classList.contains('confirm')) {
       $currentDialog.close();
+      const $newFavorite = $currentPlate.cloneNode(true);
+      $newFavorite.removeAttribute('id');
+      $favoritesList.appendChild($newFavorite);
     } else if (eventTarget.classList.contains('delete')) {
       $currentDialog.close();
     } else {

@@ -69,6 +69,9 @@ const $backdropSuggestions = document.querySelector(
   '.backdrop:has(+ main.container',
 ) as HTMLDivElement;
 const $favorites = document.querySelector('.favorites') as HTMLDivElement;
+const $favoritesList = document.querySelector(
+  '.favorites-list',
+) as HTMLDivElement;
 
 //    D.2   domQueries object
 const domQueries: Record<string, any> = {
@@ -78,6 +81,7 @@ const domQueries: Record<string, any> = {
   $suggestions,
   $backdropSuggestions,
   $favorites,
+  $favoritesList,
 };
 
 //    D.3   error checking
@@ -146,8 +150,12 @@ $suggestions.addEventListener('click', (event: Event) => {
     eventTarget.nodeName === 'DIALOG'
   ) {
     const $currentDialog = eventTarget.closest('dialog') as HTMLDialogElement;
+    const $currentPlate = eventTarget.closest('div.plate') as HTMLDialogElement;
     if (eventTarget.classList.contains('confirm')) {
       $currentDialog.close();
+      const $newFavorite = $currentPlate.cloneNode(true) as HTMLDivElement;
+      $newFavorite.removeAttribute('id');
+      $favoritesList.appendChild($newFavorite);
     } else if (eventTarget.classList.contains('delete')) {
       $currentDialog.close();
     } else {
