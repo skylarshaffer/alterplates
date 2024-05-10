@@ -267,4 +267,8 @@ div.backdrop:has(+ main.container dialog[open]) {
   span {
     display: none;
   }
+
+  .favorites-list {
+    display: none;
+  }
 }
