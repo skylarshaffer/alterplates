@@ -40,12 +40,14 @@ const $plate = document.querySelector('#plate');
 const $input = document.querySelector('input');
 const $suggestionsList = document.querySelectorAll('.suggestions .plate');
 const $suggestions = document.querySelector('.suggestions');
+const $backdrop = document.querySelector('.backdrop');
 //    D.2   domQueries object
 const domQueries = {
   $plate,
   $input,
   $suggestionsList,
   $suggestions,
+  $backdrop,
 };
 //    D.3   error checking
 for (const key in domQueries) {
@@ -93,12 +95,17 @@ $input.addEventListener('input', () => {
 $input.addEventListener('input', async () => {
   await getSuggestions();
 });
+$backdrop.addEventListener('click', () => {
+  document.querySelector('dialog[open]').close();
+  hideBackdrop();
+});
 $suggestions.addEventListener('click', (event) => {
   const eventTarget = event.target;
   console.log(eventTarget);
   if (eventTarget.classList.contains('plate')) {
     const uniqueDialog = eventTarget.children[1];
-    uniqueDialog.showModal();
+    uniqueDialog.show();
+    showBackdrop();
   } else if (
     eventTarget.nodeName === 'BUTTON' ||
     eventTarget.nodeName === 'DIALOG'
@@ -106,13 +113,22 @@ $suggestions.addEventListener('click', (event) => {
     const $currentDialog = eventTarget.closest('dialog');
     if (eventTarget.classList.contains('confirm')) {
       $currentDialog.close();
+      hideBackdrop();
     } else if (eventTarget.classList.contains('delete')) {
       $currentDialog.close();
+      hideBackdrop();
     } else {
       $currentDialog.close();
+      hideBackdrop();
     }
   }
 });
+function showBackdrop() {
+  $backdrop.classList.remove('hidden');
+}
+function hideBackdrop() {
+  $backdrop.classList.add('hidden');
+}
 function testKey(key) {
   return /[A-Za-z0-9 ]/.test(key);
 }

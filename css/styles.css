@@ -7,6 +7,7 @@
   --palette-alterplates-blue: #87bcde;
   --palette-license-plate-blue: #123b7d;
   --palette-california-red: #e21212;
+  --palette-overlay-grey: rgba(41, 41, 41, 0.2);
   --font-dm-sans: 'DM Sans', sans-serif;
   --font-lexend: lexend, sans-serif;
   --font-sofia-sans: 'Sofia Sans Extra Condensed', sans-serif;
@@ -18,14 +19,24 @@
   --add-favorite-color: var(--palette-alterplates-blue);
   --remove-favorite-color: var(--palette-california-red);
   --button-text-color: var(--palette-pure-white);
+  --overlay-color: var(--palette-overlay-grey);
 }
 
 body {
   /* scrollbar shift hotfix */
+
   width: 100vw;
   overflow-x: hidden;
-  background-color: var(--main-bg-color);
   caret-color: transparent;
+}
+
+.backdrop {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: var(--overlay-color);
+  backdrop-filter: blur(5px);
+  z-index: 1;
 }
 
 /* colors */
@@ -150,6 +161,7 @@ dialog {
   border: none;
   background-color: transparent;
   position: absolute;
+  bottom: 110%;
 }
 
 button {
@@ -163,4 +175,8 @@ button {
   justify-content: center;
   background-color: var(--add-favorite-color);
   color: var(--button-text-color);
+}
+
+.plate:has(dialog[open]) {
+  z-index: 2;
 }
