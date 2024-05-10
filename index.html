@@ -9,8 +9,6 @@
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Lexend:wght@100..900&family=Sofia+Sans+Extra+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap"
       rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -23,6 +21,13 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
+    <div class="favorites container">
+      <div class="column-full navbar">
+        <button><span>Favorites</span><i class="fa-solid fa-star"></i></button>
+      </div>
+      <div class="backdrop"></div>
+      <div class="favorites-list"></div>
+    </div>
     <header>
       <div class="container">
         <div class="row">
@@ -32,7 +37,7 @@
         </div>
       </div>
     </header>
-    <div class="backdrop hidden"></div>
+    <div class="backdrop"></div>
     <main class="container">
       <div class="plates">
         <div class="row">
@@ -56,12 +61,22 @@
                   <i class="fa-solid fa-star"></i>
                 </button>
               </dialog>
+              <dialog>
+                <button class="delete">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </dialog>
             </div>
             <div class="plate" id="plate1">
               <span></span>
               <dialog>
                 <button class="confirm">
                   <i class="fa-solid fa-star"></i>
+                </button>
+              </dialog>
+              <dialog>
+                <button class="delete">
+                  <i class="fa-solid fa-xmark"></i>
                 </button>
               </dialog>
             </div>
@@ -72,12 +87,22 @@
                   <i class="fa-solid fa-star"></i>
                 </button>
               </dialog>
+              <dialog>
+                <button class="delete">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </dialog>
             </div>
             <div class="plate" id="plate3">
               <span></span>
               <dialog>
                 <button class="confirm">
                   <i class="fa-solid fa-star"></i>
+                </button>
+              </dialog>
+              <dialog>
+                <button class="delete">
+                  <i class="fa-solid fa-xmark"></i>
                 </button>
               </dialog>
             </div>
@@ -88,12 +113,22 @@
                   <i class="fa-solid fa-star"></i>
                 </button>
               </dialog>
+              <dialog>
+                <button class="delete">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </dialog>
             </div>
             <div class="plate" id="plate5">
               <span></span>
               <dialog>
                 <button class="confirm">
                   <i class="fa-solid fa-star"></i>
+                </button>
+              </dialog>
+              <dialog>
+                <button class="delete">
+                  <i class="fa-solid fa-xmark"></i>
                 </button>
               </dialog>
             </div>
@@ -104,12 +139,22 @@
                   <i class="fa-solid fa-star"></i>
                 </button>
               </dialog>
+              <dialog>
+                <button class="delete">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </dialog>
             </div>
             <div class="plate" id="plate7">
               <span></span>
               <dialog>
                 <button class="confirm">
                   <i class="fa-solid fa-star"></i>
+                </button>
+              </dialog>
+              <dialog>
+                <button class="delete">
+                  <i class="fa-solid fa-xmark"></i>
                 </button>
               </dialog>
             </div>
@@ -120,12 +165,22 @@
                   <i class="fa-solid fa-star"></i>
                 </button>
               </dialog>
+              <dialog>
+                <button class="delete">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </dialog>
             </div>
             <div class="plate" id="plate9">
               <span></span>
               <dialog>
                 <button class="confirm">
                   <i class="fa-solid fa-star"></i>
+                </button>
+              </dialog>
+              <dialog>
+                <button class="delete">
+                  <i class="fa-solid fa-xmark"></i>
                 </button>
               </dialog>
             </div>

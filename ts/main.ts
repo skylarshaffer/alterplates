@@ -65,7 +65,16 @@ const $suggestionsList = document.querySelectorAll(
   '.suggestions .plate',
 ) as NodeListOf<PlateDiv>;
 const $suggestions = document.querySelector('.suggestions') as HTMLDivElement;
-const $backdrop = document.querySelector('.backdrop') as HTMLDivElement;
+const $backdropSuggestions = document.querySelector(
+  '.backdrop:has(+ main.container',
+) as HTMLDivElement;
+const $favorites = document.querySelector('.favorites') as HTMLDivElement;
+const $favoritesList = $favorites.querySelector(
+  '.favorites-list',
+) as HTMLDivElement;
+const $favoritesButton = $favorites.querySelector(
+  '.favorites .navbar button',
+) as HTMLButtonElement;
 
 //    D.2   domQueries object
 const domQueries: Record<string, any> = {
@@ -73,7 +82,10 @@ const domQueries: Record<string, any> = {
   $input,
   $suggestionsList,
   $suggestions,
-  $backdrop,
+  $backdropSuggestions,
+  $favorites,
+  $favoritesList,
+  $favoritesButton,
 };
 
 //    D.3   error checking
@@ -128,9 +140,16 @@ $input.addEventListener('input', async () => {
   await getSuggestions();
 });
 
-$backdrop.addEventListener('click', () => {
+$favoritesButton.addEventListener('click', () => {
+  if ($favorites.classList.contains('closed')) {
+    $favorites.classList.remove('closed');
+  } else {
+    $favorites.classList.add('closed');
+  }
+});
+
+$backdropSuggestions.addEventListener('click', () => {
   (document.querySelector('dialog[open]') as HTMLDialogElement).close();
-  hideBackdrop();
 });
 
 $suggestions.addEventListener('click', (event: Event) => {
@@ -138,32 +157,47 @@ $suggestions.addEventListener('click', (event: Event) => {
   if (eventTarget.classList.contains('plate')) {
     const uniqueDialog = eventTarget.children[1] as HTMLDialogElement;
     uniqueDialog.show();
-    showBackdrop();
   } else if (
     eventTarget.nodeName === 'BUTTON' ||
     eventTarget.nodeName === 'DIALOG'
   ) {
     const $currentDialog = eventTarget.closest('dialog') as HTMLDialogElement;
+    const $currentPlate = eventTarget.closest('div.plate') as HTMLDialogElement;
     if (eventTarget.classList.contains('confirm')) {
       $currentDialog.close();
-      hideBackdrop();
+      const $newFavorite = $currentPlate.cloneNode(true) as HTMLDivElement;
+      $newFavorite.removeAttribute('id');
+      $favoritesList.appendChild($newFavorite);
     } else if (eventTarget.classList.contains('delete')) {
       $currentDialog.close();
-      hideBackdrop();
     } else {
       $currentDialog.close();
-      hideBackdrop();
     }
   }
 });
 
-function showBackdrop(): void {
-  $backdrop.classList.remove('hidden');
-}
-
-function hideBackdrop(): void {
-  $backdrop.classList.add('hidden');
-}
+$favorites.addEventListener('click', (event: Event) => {
+  const eventTarget = event.target as HTMLDivElement | HTMLButtonElement;
+  if (eventTarget.classList.contains('plate')) {
+    const uniqueDialog = eventTarget.children[2] as HTMLDialogElement;
+    uniqueDialog.show();
+  } else if (
+    eventTarget.nodeName === 'BUTTON' ||
+    eventTarget.nodeName === 'DIALOG' ||
+    eventTarget.classList.contains('backdrop')
+  ) {
+    const $currentDialog = eventTarget.closest('dialog') as HTMLDialogElement;
+    const $currentPlate = eventTarget.closest('div.plate') as HTMLDialogElement;
+    if (eventTarget.classList.contains('confirm')) {
+      $currentDialog.close();
+    } else if (eventTarget.classList.contains('delete')) {
+      $currentPlate.remove();
+      $currentDialog.close();
+    } else {
+      (document.querySelector('dialog[open]') as HTMLDialogElement).close();
+    }
+  }
+});
 
 function testKey(key: string): boolean {
   return /[A-Za-z0-9 ]/.test(key);
@@ -337,4 +371,8 @@ async function getSuggestions(): Promise<void> {
       $suggestionsList[i].firstElementChild.textContent = '';
     }
   }
+}
+
+if (window.innerWidth < 768) {
+  $favorites.classList.add('closed');
 }
