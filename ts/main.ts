@@ -66,6 +66,7 @@ const $suggestionsList = document.querySelectorAll(
 ) as NodeListOf<PlateDiv>;
 const $suggestions = document.querySelector('.suggestions') as HTMLDivElement;
 const $backdrop = document.querySelector('.backdrop') as HTMLDivElement;
+const $favorites = document.querySelector('.favorites') as HTMLDivElement;
 
 //    D.2   domQueries object
 const domQueries: Record<string, any> = {
@@ -74,6 +75,7 @@ const domQueries: Record<string, any> = {
   $suggestionsList,
   $suggestions,
   $backdrop,
+  $favorites,
 };
 
 //    D.3   error checking
@@ -130,7 +132,6 @@ $input.addEventListener('input', async () => {
 
 $backdrop.addEventListener('click', () => {
   (document.querySelector('dialog[open]') as HTMLDialogElement).close();
-  hideBackdrop();
 });
 
 $suggestions.addEventListener('click', (event: Event) => {
@@ -138,7 +139,6 @@ $suggestions.addEventListener('click', (event: Event) => {
   if (eventTarget.classList.contains('plate')) {
     const uniqueDialog = eventTarget.children[1] as HTMLDialogElement;
     uniqueDialog.show();
-    showBackdrop();
   } else if (
     eventTarget.nodeName === 'BUTTON' ||
     eventTarget.nodeName === 'DIALOG'
@@ -146,24 +146,33 @@ $suggestions.addEventListener('click', (event: Event) => {
     const $currentDialog = eventTarget.closest('dialog') as HTMLDialogElement;
     if (eventTarget.classList.contains('confirm')) {
       $currentDialog.close();
-      hideBackdrop();
     } else if (eventTarget.classList.contains('delete')) {
       $currentDialog.close();
-      hideBackdrop();
     } else {
       $currentDialog.close();
-      hideBackdrop();
     }
   }
 });
 
-function showBackdrop(): void {
-  $backdrop.classList.remove('hidden');
-}
-
-function hideBackdrop(): void {
-  $backdrop.classList.add('hidden');
-}
+$favorites.addEventListener('click', (event: Event) => {
+  const eventTarget = event.target as HTMLDivElement | HTMLButtonElement;
+  if (eventTarget.classList.contains('plate')) {
+    const uniqueDialog = eventTarget.children[2] as HTMLDialogElement;
+    uniqueDialog.show();
+  } else if (
+    eventTarget.nodeName === 'BUTTON' ||
+    eventTarget.nodeName === 'DIALOG'
+  ) {
+    const $currentDialog = eventTarget.closest('dialog') as HTMLDialogElement;
+    if (eventTarget.classList.contains('confirm')) {
+      $currentDialog.close();
+    } else if (eventTarget.classList.contains('delete')) {
+      $currentDialog.close();
+    } else {
+      $currentDialog.close();
+    }
+  }
+});
 
 function testKey(key: string): boolean {
   return /[A-Za-z0-9 ]/.test(key);

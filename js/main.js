@@ -41,6 +41,7 @@ const $input = document.querySelector('input');
 const $suggestionsList = document.querySelectorAll('.suggestions .plate');
 const $suggestions = document.querySelector('.suggestions');
 const $backdrop = document.querySelector('.backdrop');
+const $favorites = document.querySelector('.favorites');
 //    D.2   domQueries object
 const domQueries = {
   $plate,
@@ -48,6 +49,7 @@ const domQueries = {
   $suggestionsList,
   $suggestions,
   $backdrop,
+  $favorites,
 };
 //    D.3   error checking
 for (const key in domQueries) {
@@ -97,15 +99,12 @@ $input.addEventListener('input', async () => {
 });
 $backdrop.addEventListener('click', () => {
   document.querySelector('dialog[open]').close();
-  hideBackdrop();
 });
 $suggestions.addEventListener('click', (event) => {
   const eventTarget = event.target;
-  console.log(eventTarget);
   if (eventTarget.classList.contains('plate')) {
     const uniqueDialog = eventTarget.children[1];
     uniqueDialog.show();
-    showBackdrop();
   } else if (
     eventTarget.nodeName === 'BUTTON' ||
     eventTarget.nodeName === 'DIALOG'
@@ -113,22 +112,32 @@ $suggestions.addEventListener('click', (event) => {
     const $currentDialog = eventTarget.closest('dialog');
     if (eventTarget.classList.contains('confirm')) {
       $currentDialog.close();
-      hideBackdrop();
     } else if (eventTarget.classList.contains('delete')) {
       $currentDialog.close();
-      hideBackdrop();
     } else {
       $currentDialog.close();
-      hideBackdrop();
     }
   }
 });
-function showBackdrop() {
-  $backdrop.classList.remove('hidden');
-}
-function hideBackdrop() {
-  $backdrop.classList.add('hidden');
-}
+$favorites.addEventListener('click', (event) => {
+  const eventTarget = event.target;
+  if (eventTarget.classList.contains('plate')) {
+    const uniqueDialog = eventTarget.children[2];
+    uniqueDialog.show();
+  } else if (
+    eventTarget.nodeName === 'BUTTON' ||
+    eventTarget.nodeName === 'DIALOG'
+  ) {
+    const $currentDialog = eventTarget.closest('dialog');
+    if (eventTarget.classList.contains('confirm')) {
+      $currentDialog.close();
+    } else if (eventTarget.classList.contains('delete')) {
+      $currentDialog.close();
+    } else {
+      $currentDialog.close();
+    }
+  }
+});
 function testKey(key) {
   return /[A-Za-z0-9 ]/.test(key);
 }
@@ -293,3 +302,11 @@ async function getSuggestions() {
     }
   }
 }
+// <div class="plate">
+//           <span></span>
+//           <dialog>
+//             <button class="confirm">
+//               <i class="fa-solid fa-star"></i>
+//             </button>
+//           </dialog>
+//         </div>

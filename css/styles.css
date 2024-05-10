@@ -37,7 +37,7 @@ body {
   height: 100%;
   background-color: var(--overlay-color);
   backdrop-filter: blur(5px);
-  z-index: 1;
+  z-index: 2;
 }
 
 /* colors */
@@ -90,6 +90,7 @@ button i {
 .favorites .plate,
 .suggestions .plate {
   max-width: 255.5px;
+  cursor: pointer;
 }
 
 .plate span,
@@ -111,7 +112,6 @@ button i {
 .suggestions .plate {
   width: calc(50% - 1rem);
   margin: 1rem 0;
-  cursor: pointer;
 
   span {
     font-size: min(12vw, 4.5rem);
@@ -200,6 +200,10 @@ button {
   width: 3.5rem;
 }
 
+.favorites .plate button {
+  background-color: var(--remove-favorite-color);
+}
+
 .favorites .navbar button {
   color: var(--button-text-color);
   background-color: var(--favorites-bar-color);
@@ -218,10 +222,11 @@ button {
 
 .favorites .navbar {
   padding: 0.5rem 0;
+  z-index: 3;
 }
 
 .plate:has(dialog[open]) {
-  z-index: 2;
+  z-index: 3;
 }
 
 .favorites {
@@ -231,5 +236,13 @@ button {
   width: 50%;
   background-color: var(--favorites-bar-color);
   flex-direction: column;
-  z-index: 2;
+  z-index: 1;
+}
+
+div.backdrop {
+  display: none;
+}
+
+div.backdrop:has(+ main.container dialog[open]) {
+  display: block;
 }
