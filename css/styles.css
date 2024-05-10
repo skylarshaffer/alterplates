@@ -87,6 +87,11 @@ button i {
   margin: 1rem 0;
 }
 
+.favorites .plate,
+.suggestions .plate {
+  max-width: 255.5px;
+}
+
 .plate span,
 .plate input {
   position: relative;
@@ -116,6 +121,11 @@ button i {
 /* desktop */
 
 @media screen and (width >=768px) {
+  .suggestions .plate,
+  .favorites .plate {
+    max-width: 252px;
+  }
+
   .plate input {
     font-size: min(22vw, 12rem);
   }
@@ -218,7 +228,8 @@ button {
   position: fixed;
   right: 0;
   height: 100%;
-  width: 50vw;
+  width: 50%;
   background-color: var(--favorites-bar-color);
   flex-direction: column;
+  z-index: 2;
 }
