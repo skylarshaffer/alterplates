@@ -20,6 +20,14 @@ Click on a suggested plate to add to Favorites, or clear existing favorites from
 ## Roadmap
 
 - [ ] Fix incomplete population and leftovers when new suggestions do not outnumber old
+      
+- [ ] Improve request efficiency
+
+- [ ] Eliminate duplicates
+
+- [ ] Register numbers as typed
+
+- [ ] Display plate quantity based on quantity of results
 
 ## APIs
 
